@@ -77,27 +77,33 @@ if (!place_free(x, y + 1)) {
         }
     }
 } else {
-    if (hspeed &lt; 0) {
-        hspeed += PLAYER_AIR_HSPEED;
-    } else if(hspeed &gt; 0) {
-        hspeed -= PLAYER_AIR_HSPEED;
-    }
-    
     if (keyboard_check(vk_left)) {
         dir = DIR_LEFT;
-        if (place_free(x - PLAYER_HSPEED, y) &amp;&amp;
-            abs(hspeed) &lt; PLAYER_HSPEED) {
-            hspeed += -PLAYER_AIR_HSPEED;
+        if (place_free(x - PLAYER_HSPEED, y)) {
+            if (abs(hspeed) &lt;= PLAYER_HSPEED) {
+                hspeed += -PLAYER_AIR_HSPEED;
+            } else {
+                hspeed = -PLAYER_HSPEED;
+            }
         } else {
             move_contact_solid(180, PLAYER_HSPEED);
         }
     } else if (keyboard_check(vk_right)) {
         dir = DIR_RIGHT;
-        if (place_free(x + PLAYER_HSPEED, y) &amp;&amp;
-            abs(hspeed) &lt; PLAYER_HSPEED) {
-            hspeed += PLAYER_AIR_HSPEED;
+        if (place_free(x + PLAYER_HSPEED, y)) {
+            if (abs(hspeed) &lt;= PLAYER_HSPEED) {
+                hspeed += PLAYER_AIR_HSPEED;
+            } else {
+                hspeed = PLAYER_HSPEED;
+            }
         } else {
             move_contact_solid(0, PLAYER_HSPEED);
+        }
+    } else {
+        if (hspeed &lt; 0) {
+            hspeed += PLAYER_AIR_HSPEED;
+        } else if(hspeed &gt; 0) {
+            hspeed -= PLAYER_AIR_HSPEED;
         }
     }
 }
