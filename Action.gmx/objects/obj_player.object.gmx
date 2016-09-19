@@ -64,7 +64,6 @@ if (keyboard_check(vk_left)) {
     dir = DIR_LEFT;
     if (place_free(x - PLAYER_HSPEED, y)) {
         hspeed = -PLAYER_HSPEED;
-        vspeed = 10;
     } else {
         move_contact_solid(180, PLAYER_HSPEED);
     }
