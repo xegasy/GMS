@@ -58,6 +58,7 @@ dir = DIR_RIGHT;
             <kind>1</kind>
             <string>/// 横移動
 
+<<<<<<< HEAD
 hspeed = 0;
 
 if (keyboard_check(vk_left)) {
@@ -66,13 +67,49 @@ if (keyboard_check(vk_left)) {
         hspeed = -PLAYER_HSPEED;
     } else {
         move_contact_solid(180, PLAYER_HSPEED);
+=======
+if (!place_free(x, y + 1)) {
+    hspeed = 0;
+    
+    if (keyboard_check(vk_left)) {
+        dir = DIR_LEFT;
+        if (place_free(x - PLAYER_HSPEED, y)) {
+            hspeed = -PLAYER_HSPEED;
+        } else {
+            move_contact_solid(180, PLAYER_HSPEED);
+        }
+    } else if (keyboard_check(vk_right)) {
+        dir = DIR_RIGHT;
+        if (place_free(x + PLAYER_HSPEED, y)) {
+            hspeed = PLAYER_HSPEED;
+        } else {
+            move_contact_solid(0, PLAYER_HSPEED);
+        }
+>>>>>>> origin/develop
     }
-} else if (keyboard_check(vk_right)) {
-    dir = DIR_RIGHT;
-    if (place_free(x + PLAYER_HSPEED, y)) {
-        hspeed = PLAYER_HSPEED;
-    } else {
-        move_contact_solid(0, PLAYER_HSPEED);
+} else {
+    if (hspeed &lt; 0) {
+        hspeed += PLAYER_AIR_HSPEED;
+    } else if(hspeed &gt; 0) {
+        hspeed -= PLAYER_AIR_HSPEED;
+    }
+    
+    if (keyboard_check(vk_left)) {
+        dir = DIR_LEFT;
+        if (place_free(x - PLAYER_HSPEED, y) &amp;&amp;
+            abs(hspeed) &lt; PLAYER_HSPEED) {
+            hspeed += -PLAYER_AIR_HSPEED;
+        } else {
+            move_contact_solid(180, PLAYER_HSPEED);
+        }
+    } else if (keyboard_check(vk_right)) {
+        dir = DIR_RIGHT;
+        if (place_free(x + PLAYER_HSPEED, y) &amp;&amp;
+            abs(hspeed) &lt; PLAYER_HSPEED) {
+            hspeed += PLAYER_AIR_HSPEED;
+        } else {
+            move_contact_solid(0, PLAYER_HSPEED);
+        }
     }
 }
 </string>
