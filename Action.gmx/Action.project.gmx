@@ -19,7 +19,10 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
-  <scripts name="scripts"/>
+  <scripts name="scripts">
+    <script>scripts\move_player_ground.gml</script>
+    <script>scripts\move_player_air.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\obj_debugMgr</object>
     <object>objects\obj_sound_ethnic21</object>

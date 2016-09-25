@@ -62,43 +62,15 @@ if (!place_free(x, y + 1)) {
     hspeed = 0;
     
     if (keyboard_check(vk_left)) {
-        dir = DIR_LEFT;
-        if (place_free(x - PLAYER_HSPEED, y)) {
-            hspeed = -PLAYER_HSPEED;
-        } else {
-            move_contact_solid(180, PLAYER_HSPEED);
-        }
+        move_player_ground(DIR_LEFT);
     } else if (keyboard_check(vk_right)) {
-        dir = DIR_RIGHT;
-        if (place_free(x + PLAYER_HSPEED, y)) {
-            hspeed = PLAYER_HSPEED;
-        } else {
-            move_contact_solid(0, PLAYER_HSPEED);
-        }
+        move_player_ground(DIR_RIGHT);
     }
 } else {
-    if (keyboard_check(vk_left)) {
-        dir = DIR_LEFT;
-        if (place_free(x - PLAYER_HSPEED, y)) {
-            if (abs(hspeed) &lt;= PLAYER_HSPEED) {
-                hspeed += -PLAYER_AIR_HSPEED;
-            } else {
-                hspeed = -PLAYER_HSPEED;
-            }
-        } else {
-            move_contact_solid(180, PLAYER_HSPEED);
-        }
-    } else if (keyboard_check(vk_right)) {
-        dir = DIR_RIGHT;
-        if (place_free(x + PLAYER_HSPEED, y)) {
-            if (abs(hspeed) &lt;= PLAYER_HSPEED) {
-                hspeed += PLAYER_AIR_HSPEED;
-            } else {
-                hspeed = PLAYER_HSPEED;
-            }
-        } else {
-            move_contact_solid(0, PLAYER_HSPEED);
-        }
+    if (keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right)) {
+        move_player_air(DIR_LEFT);
+    } else if (keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left)) {
+        move_player_air(DIR_RIGHT);
     } else {
         if (hspeed &lt; 0) {
             hspeed += PLAYER_AIR_HSPEED;
