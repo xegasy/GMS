@@ -1,4 +1,5 @@
 var sign_num;           // move direction setting
+var move_speed;         // move speed
 
 dir = argument0;
 if (dir == DIR_RIGHT) {
@@ -7,12 +8,14 @@ if (dir == DIR_RIGHT) {
     sign_num = -1;
 }
 
-if (place_free(x + (PLAYER_HSPEED * sign_num), y)) {
-    if (keyboard_check(ord("Z"))) {
-        hspeed = PLAYER_HSPEED * sign_num;
-    } else {
-        hspeed = PLAYER_WALK_HSPEED * sign_num;
-    }
+if (keyboard_check(ord("Z"))) {
+    move_speed = PLAYER_RUN_HSPEED * sign_num;
 } else {
-    move_contact_solid(180 * argument0, PLAYER_HSPEED);
+    move_speed = PLAYER_WALK_HSPEED * sign_num;
+}
+
+if (place_free(x + move_speed, y)) {
+    hspeed = move_speed;
+} else {
+    move_contact_solid(180 * argument0, PLAYER_RUN_HSPEED);
 }
