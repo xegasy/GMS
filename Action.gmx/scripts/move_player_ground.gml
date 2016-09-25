@@ -8,7 +8,11 @@ if (dir == DIR_RIGHT) {
 }
 
 if (place_free(x + (PLAYER_HSPEED * sign_num), y)) {
-    hspeed = PLAYER_HSPEED * sign_num;
+    if (keyboard_check(ord("Z"))) {
+        hspeed = PLAYER_HSPEED * sign_num;
+    } else {
+        hspeed = PLAYER_WALK_HSPEED * sign_num;
+    }
 } else {
     move_contact_solid(180 * argument0, PLAYER_HSPEED);
 }

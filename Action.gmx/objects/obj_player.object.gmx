@@ -73,9 +73,9 @@ if (!place_free(x, y + 1)) {
         move_player_air(DIR_RIGHT);
     } else {
         if (hspeed &lt; 0) {
-            hspeed += PLAYER_AIR_HSPEED;
+            hspeed += PLAYER_AIR_HSPEED / 2;
         } else if(hspeed &gt; 0) {
-            hspeed -= PLAYER_AIR_HSPEED;
+            hspeed -= PLAYER_AIR_HSPEED / 2;
         }
     }
 }
@@ -156,10 +156,10 @@ if (place_free(x, y + 1)) {
             <kind>1</kind>
             <string>/// 状態判定
 
-if (hspeed == 0 and vspeed == 0) {
+if (hspeed == 0 and vspeed == 0 and !place_free(x, y + 1)) {
     state = STATE_STAND;
 } else if (hspeed != 0 and vspeed == 0) {
-    state = STATE_RUN;
+    state = STATE_RUN;  
 } else if (vspeed != 0) {
     state = STATE_JUMP;
 }
@@ -221,6 +221,15 @@ if (vspeed &lt; 0) {
     gravity = 0;
     vspeed = 0;
 }
+
+//if (hspeed &lt; 0) {
+//    move_contact_solid(0, abs(hspeed));
+//    hspeed = 0;
+//} else {
+//    move_contact_solid(180, abs(hspeed));
+//    hspeed = 0;
+//}
+
 </string>
           </argument>
         </arguments>
