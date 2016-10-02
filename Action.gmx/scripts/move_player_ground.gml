@@ -27,4 +27,5 @@ if (place_free(x + move_speed, y)) {
 } else {
     // オブジェクトまで移動させる
     move_contact_solid(180 * argument0, PLAYER_RUN_HSPEED);
+    hspeed = 0;
 }
