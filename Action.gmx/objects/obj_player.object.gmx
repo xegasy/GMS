@@ -58,20 +58,34 @@ dir = DIR_RIGHT;
             <kind>1</kind>
             <string>/// 横移動
 
+show_debug_message( 'y : ' + string(y) + ', top : ' + string(bbox_top) + ', bottom : ' + string(bbox_bottom));
+show_debug_message( 'x : ' + string(x) + ', left : ' + string(bbox_left) + ', right : ' + string(bbox_right));
+show_debug_message(string(bbox_bottom));
+// 空中判定
 if (!place_free(x, y + 1)) {
-    hspeed = 0;
-    
+// 地上
+    // 移動キーを押しているか確認
     if (keyboard_check(vk_left)) {
+        // 左方向へ移動
         move_player_ground(DIR_LEFT);
     } else if (keyboard_check(vk_right)) {
+        // 右方向へ移動
         move_player_ground(DIR_RIGHT);
+    } else {
+        // 移動キーを押していない場合は移動しない
+        hspeed = 0;
     }
 } else {
+// 空中
+    // 移動キーを押しているか確認
     if (keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right)) {
+        // 左方向へ移動
         move_player_air(DIR_LEFT);
     } else if (keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left)) {
+        // 右方向へ移動
         move_player_air(DIR_RIGHT);
     } else {
+        // 移動キーを押していない場合は徐々に減速
         if (hspeed &lt; 0) {
             hspeed += PLAYER_AIR_HSPEED / 2;
         } else if(hspeed &gt; 0) {
@@ -130,7 +144,12 @@ if (keyboard_check_pressed(vk_space)) {
             <string>/// 落下
 
 if (place_free(x, y + 1)) {
-    gravity = PLAYER_GRAVITY;
+    if (y &lt; 800) {
+        gravity = PLAYER_GRAVITY;
+    } else {
+        x = 50;
+        y = 50;
+    }
 } else {
     gravity = 0;
 }
@@ -158,9 +177,9 @@ if (place_free(x, y + 1)) {
 
 if (hspeed == 0 and vspeed == 0 and !place_free(x, y + 1)) {
     state = STATE_STAND;
-} else if (hspeed != 0 and vspeed == 0) {
+} else if (hspeed != 0 and vspeed == 0 and !place_free(x, y + 1)) {
     state = STATE_RUN;  
-} else if (vspeed != 0) {
+} else if (vspeed != 0 ) {
     state = STATE_JUMP;
 }
 
