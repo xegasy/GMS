@@ -7,7 +7,67 @@
   <persistent>0</persistent>
   <parentName>obj_wall</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// 壊す！！
+
+//show_debug_message(string(bbox_bottom));
+
+//if (instance_exists(obj_player)) {
+//    if (abs(y) - abs(obj_player.y) &lt; 2) {
+//        instance_destroy();
+//        with (instance_nearest(x, y, obj_player))
+//        {
+            //instance_destroy(); // 一番近いインスタンスを破棄する
+//        }
+//    }
+//}
+
+// 生成
+particle = part_system_create(); // パーティクルシステムを生成
+part1    = part_type_create();   // パーティクルタイプを生成
+
+// タイプを設定
+part_type_shape    (part1, pt_shape_pixel        ); // 形状をピクセルに指定
+part_type_size     (part1, 4,      4, -0.1,     1); // サイズを「4」に。少しずつ小さくなる
+part_type_direction(part1, 0,    359,    0,     0); // 0～359度にランダムで発生
+part_type_life     (part1, 30,    40             ); // 生存ステップ数は30～40
+part_type_gravity  (part1, 0.25, 270             ); // 重力は0.3
+part_type_speed    (part1, 4,      8, -0.30, 0.01); // 初速は4～8で少しずつ減速
+
+part_type_colour1(part1, c_red);
+
+if (place_meeting(x, y + 1, obj_player)) {
+    if (obj_player.vspeed &lt; 0 || place_free(obj_player.x, obj_player.y + 1)) {
+        instance_destroy();
+        //effect_create_below(ef_snow, x, y, 2, c_red);
+        // パーティクル生成
+        part_particles_create(particle, x, y, part1, 10); // 10個生成する
+        obj_player.vspeed = 0;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
